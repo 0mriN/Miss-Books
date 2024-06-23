@@ -9,6 +9,6 @@ color:green
 .on-sale{
     display: flex;
     width: 5em;
-    margin-top: 2%;
+    margin-top: 1em;
     transform:rotate(20deg);
 }

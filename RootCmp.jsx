@@ -10,7 +10,7 @@ export function App() {
         <section className="app">
             <header className="app-header full main-layout">
                 <section>
-                    <h1>My App</h1>
+                    <h1>Omri's Book Shop</h1>
                     <nav className="app-nav">
                         <a onClick={()=> setPage('home')} href="#">Home</a>
                         <a onClick={()=> setPage('about')} href="#">About Us</a>

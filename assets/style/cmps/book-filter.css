@@ -1,7 +1,9 @@
 .book-filter {
-    background-color: var(--clr2bg);
+    /* background-color: var(--clr2bg); */
     padding-inline: 1em;
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+border: 1px solid white;
+border-radius: 35px;
 }
 
 .book-filter form {

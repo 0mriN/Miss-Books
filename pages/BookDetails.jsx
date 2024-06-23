@@ -1,5 +1,6 @@
+import { LongTxt } from "../cmps/LongTxt.jsx"
 import { bookService } from "../services/book.service.js"
-import { utilService } from "../services/util.service.js"
+// import { utilService } from "../services/util.service.js"
 
 const { useEffect, useState } = React
 
@@ -34,7 +35,7 @@ export function BookDetails({ bookId, onBack }) {
             {book.pageCount > 500 && <p>Serious Reading</p>}
             {book.pageCount > 200 && book.pageCount < 500 && <p>Decent Reading</p>}
             {book.pageCount > 100 && book.pageCount < 200 && <p>Light Reading</p>}
-            <p>{book.description}</p>
+            <LongTxt txt={book.description}/>
             <button onClick={onBack}>Return</button>
         </section>
     )
