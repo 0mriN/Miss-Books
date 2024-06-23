@@ -1,0 +1,14 @@
+
+.red{
+  color: red;  
+}
+.green {
+color:green
+}
+
+.on-sale{
+    display: flex;
+    width: 5em;
+    margin-top: 2%;
+    transform:rotate(20deg);
+}
