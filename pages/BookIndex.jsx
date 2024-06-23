@@ -1,25 +1,55 @@
 import { BookList } from "../cmps/BookList.jsx";
 import { bookService } from "../services/book.service.js";
+import { BookDetails } from "./BookDetails.jsx";
 
 const { useEffect, useState } = React
 
 export function BookIndex() {
 
     const [books, setBooks] = useState(null)
+    const [selectedBookId, setSelectedBookId] = useState(null)
 
     useEffect(() => {
+        loadBooks()
+    }, [])
+
+    function loadBooks() {
         bookService.query()
             .then(books => setBooks(books))
             .catch(err => {
-                console.log('err:', err);
+                console.log('err:', err)
             })
-    }, [])
+    }
 
-    if(!books) return <div>Loading...</div>
+    function onRemoveBook(bookId) {
+        bookService.remove(bookId)
+            .then(() => {
+                setBooks(prevBooks =>
+                    books.filter(book => book.id !== bookId)
+                )
+            })
+            .catch(err => {
+                console.log('Problem removing book:', err)
+            })
+    }
+
+    function onSelectBookId(bookId){
+        setSelectedBookId(bookId)
+    }
+
+    if (!books) return <div>Loading...</div>
+
     return (
         <section className="book-indx">
-            <BookList books={books}/>
-            {/* <p></p> */}
+            {!selectedBookId
+                ? <React.Fragment>
+                    <h1>Our Books</h1>
+                    <BookList books={books}
+                     onRemoveBook={onRemoveBook}
+                      onSelectBookId={onSelectBookId} />
+                </React.Fragment>
+                : <BookDetails onBack={()=>setSelectedBookId(null)} bookId={selectedBookId} />
+            }
         </section>
     )
 }
