@@ -1,10 +1,13 @@
 
-export function BookPreview() {
-    var book = { title: 'Puki Reactof', price: 87 }
+export function BookPreview({ book }) {
+    
+    const { title, price } = book
+    
     return (
         <section className="book-preview">
-            <h2>{book.title}</h2>
-            <h3>Price: {book.price}</h3>
+            <h2><u>Title:</u> {title}</h2>
+            <img src={`assets/img/${title}.png`} alt="" />
+            <h3><u>Price:</u> {price}</h3>
         </section>
     )
 }
