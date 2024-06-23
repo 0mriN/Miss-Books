@@ -55,6 +55,7 @@ export function BookIndex() {
                         onSelectBookId={onSelectBookId} />
                 </React.Fragment>
                 : <BookDetails onBack={() => setSelectedBookId(null)} bookId={selectedBookId} />
+                
             }
         </section>
     )

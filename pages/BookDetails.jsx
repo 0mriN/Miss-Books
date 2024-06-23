@@ -16,10 +16,14 @@ export function BookDetails({ bookId , onBack}) {
 
     return (
         <section className="book-details">
-            <h1>Book Title:{book.title}</h1>
-            <h1>Book Price:{book.price}</h1>
-            <img src={`assets/img/${book.title}.png`} alt="" />
-            <p>{utilService.makeLorem(50)}</p>
+            <h2>Book Title:{book.title}</h2>
+            <h1>Book Subtitle:{book.subtitle}</h1>
+            <h2>Book Author:{book.authors}</h2>
+            <img src={book.thumbnail} alt="" />
+            <h3>Book Price:{book.listPrice.amount}</h3>
+            <h4>Book Type:{book.categories}</h4>
+            <h5>Book Published in:{book.publishedDate}</h5>
+            <p>{book.description}</p>
             <button onClick={onBack}>Return</button>
         </section>
     )
