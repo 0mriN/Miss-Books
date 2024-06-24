@@ -12,6 +12,7 @@ export const bookService = {
     save,
     getEmptyBook,
     getNextBookId,
+    getPrevBookId,
     getFilterBy,
     setFilterBy
 }
@@ -68,6 +69,14 @@ function getNextBookId(bookId) {
             return books[nextBookIdx].id
         })
 }
+function getPrevBookId(bookId) {
+    return storageService.query(BOOK_KEY)
+        .then(books => {
+            let nextBookIdx = books.findIndex(book => book.id === bookId) - 1
+            if (nextBookIdx === books.length) nextBookIdx = 0
+            return books[nextBookIdx].id
+        })
+}
 
 function _createBooks() {
     let books = utilService.loadFromStorage(BOOK_KEY)
@@ -86,7 +95,7 @@ function _createBooks() {
                 description: utilService.makeLorem(20),
                 pageCount: utilService.getRandomIntInclusive(20, 600),
                 categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
-                thumbnail: `http://coding-academy.org/books-photos/${i + 1}.jpg`,
+                thumbnail: `./assets/img/${i + 1}.jpg`,
                 language: "en",
                 listPrice: {
                     amount: utilService.getRandomIntInclusive(80, 500),

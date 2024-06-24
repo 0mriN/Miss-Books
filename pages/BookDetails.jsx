@@ -1,22 +1,41 @@
+const { useParams, Link } = ReactRouterDOM
+
 import { LongTxt } from "../cmps/LongTxt.jsx"
 import { bookService } from "../services/book.service.js"
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faHandPointRight } from '@fortawesome/free-solid-svg-icons'
 // import { utilService } from "../services/util.service.js"
 
 const { useEffect, useState } = React
 
-export function BookDetails({ bookId, onBack }) {
+export function BookDetails() {
 
     const [book, setBook] = useState(null)
+    const [nextBookId, setNextBookId] = useState()
+    const [prevBookId, setPrevBookId] = useState()
+
+    const { bookId } = useParams()
 
     useEffect(() => {
         bookService.get(bookId)
-            .then(book => setBook(book))
-    }, [])
+            .then(book => {
+                setBook(book)
+
+                bookService.getNextBookId(bookId)
+                    .then(nextId => setNextBookId(nextId))
+
+                    bookService.getPrevBookId(bookId)
+                    .then(prevId => setPrevBookId(prevId))
+            })
+
+
+    }, [bookId])
 
     const price = book && book.listPrice && (
         (book.listPrice.amount > 150) ? 'red' :
             (book.listPrice.amount < 20) ? 'green' : ''
     )
+
 
     if (!book) return <div>Loading...</div>
 
@@ -35,8 +54,13 @@ export function BookDetails({ bookId, onBack }) {
             {book.pageCount > 500 && <p>Serious Reading</p>}
             {book.pageCount > 200 && book.pageCount < 500 && <p>Decent Reading</p>}
             {book.pageCount > 100 && book.pageCount < 200 && <p>Light Reading</p>}
-            <LongTxt txt={book.description}/>
-            <button onClick={onBack}>Return</button>
+            <LongTxt txt={book.description} />
+            <button><Link to="/books">Return</Link></button>
+            {/* <FontAwesomeIcon icon={faHandPointRight} /> */}
+            <div>
+            <button><Link to={`/books/${prevBookId}`}>Previous</Link></button>
+            <button><Link to={`/books/${nextBookId}`}>Next</Link></button>
+            </div>
         </section>
     )
 }

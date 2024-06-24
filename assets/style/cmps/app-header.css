@@ -10,6 +10,11 @@
   justify-content: space-between;
 }
 
+.app-header a.active {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
 .app-header .app-nav {
   display: flex;
   gap: 15px;
