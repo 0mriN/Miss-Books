@@ -1,6 +1,6 @@
 import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
-
+const gNextId = 1
 const BOOK_KEY = 'bookDB'
 var gFilterBy = { title: '', price: 0 }
 _createBooks()
@@ -47,8 +47,34 @@ function save(book) {
     }
 }
 
-function getEmptyBook(title = '', price = 0) {
-    return { id: '', title, price }
+function getEmptyBook(id = '', title = '', amount = 0, thumbnail = `http://coding-academy.org/books-photos/${gNextId}.jpg`) {
+    const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
+
+    return {
+        id,
+        title,
+        subtitle: utilService.makeLorem(4),
+        authors: [utilService.makeLorem(1)],
+        publishedDate: utilService.getRandomIntInclusive(1950, 2024),
+        description: utilService.makeLorem(20),
+        pageCount: utilService.getRandomIntInclusive(20, 600),
+        categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
+        thumbnail,
+        language: "en",
+        listPrice: {
+            amount,
+            currencyCode: "EUR",
+            isOnSale: Math.random() > 0.7
+        },
+        reviews: [
+            {
+                id: utilService.makeId(0),
+                fullName: utilService.makeLorem(1),
+                rating: utilService.getRandomIntInclusive(1, 5),
+                readAt: '06/24/2024'
+            }
+        ]
+    }
 }
 
 function getFilterBy() {
@@ -106,7 +132,7 @@ function _createBooks() {
             books.push(book)
         }
         console.log('books', books)
-        utilService.saveToStorage(BOOK_KEY,books)
+        utilService.saveToStorage(BOOK_KEY, books)
     }
 }
 

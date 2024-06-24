@@ -26,8 +26,7 @@ export function BookFilter({ filterBy, onSetFilter }) {
         }
 
         setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
-
-
+        
     }
 
     const { title, price } = filterByToEdit

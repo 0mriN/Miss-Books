@@ -1,3 +1,4 @@
+const { Link }= ReactRouterDOM
 import { BookFilter } from "../cmps/BookFilter.jsx";
 import { BookList } from "../cmps/BookList.jsx";
 import { bookService } from "../services/book.service.js";
@@ -47,6 +48,7 @@ export function BookIndex() {
         <section className="book-indx">
             <BookFilter filterBy={filterBy} onSetFilter={onSetFilter} />
             <h1>Our Books</h1>
+            <button><Link to="/books/edit">Add</Link></button>
             <BookList
                 books={books}
                 onRemoveBook={onRemoveBook}

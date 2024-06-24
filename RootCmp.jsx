@@ -7,6 +7,7 @@ import { AppHeader } from './cmps/AppHeader.jsx'
 import { Home } from './cmps/Home.jsx'
 import { AboutUs } from './pages/AboutUs.jsx'
 import { BookDetails } from './pages/BookDetails.jsx'
+import { BookEdit } from './pages/BookEdit.jsx'
 import { BookIndex } from './pages/BookIndex.jsx'
 
 const { useState } = React
@@ -29,6 +30,9 @@ export function App() {
                         </Route>
                         <Route path="/books" element={<BookIndex />} />
                         <Route path="/books/:bookId" element={<BookDetails />} />
+                        <Route path="/books/edit" element={<BookEdit />} />
+                        <Route path="/books/edit/:bookId" element={<BookEdit />} />
+                        {/* the url is getting the edit to the id when trying to edit */}
                     </Routes>
                 </main>
             </section>
