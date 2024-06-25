@@ -15,7 +15,10 @@ export const bookService = {
     getPrevBookId,
     getFilterBy,
     setFilterBy,
-    addReview
+    saveReview,
+    getEmptyReview,
+    removeReview,
+
 }
 
 function query(gFilterBy = {}) {
@@ -99,15 +102,40 @@ function getNextBookId(bookId) {
 function getPrevBookId(bookId) {
     return storageService.query(BOOK_KEY)
         .then(books => {
-            let nextBookIdx = books.findIndex(book => book.id === bookId) - 1
-            if (nextBookIdx === books.length) nextBookIdx = 0
-            return books[nextBookIdx].id
+            let currentBookIdx = books.findIndex(book => book.id === bookId)
+            let prevBookIdx = (currentBookIdx - 1 + books.length) % books.length
+            return books[prevBookIdx].id
         })
 }
 
-function addReview(bookId,review){
-    console.log('bookId:', bookId);
-    console.log('review:', review);
+function saveReview(bookId, review) {
+
+    return get(bookId).then(book => {
+        
+        const thisReview = _createReview(review)
+        book.reviews.unshift(thisReview)
+        return save(book).then(() => thisReview)
+    })
+}
+
+function getEmptyReview() {
+
+    return {
+        fullName: 'new name',
+        rating: 0,
+        readAt: new Date().toISOString().slice(0, 10),
+        txt: '',
+        selected: 0
+    }
+}
+
+function removeReview(bookId, reviewId) {
+
+    return get(bookId).then(book => {
+        const newReviews = book.reviews.filter((review) => review.Id !== reviewId)
+        book.reviews = newReviews
+        return save(book)
+    })
 }
 
 function _createBooks() {
@@ -146,4 +174,11 @@ function _createBook(title, price = 150) {
     const book = getEmptyBook(title, price)
     book.id = utilService.makeId()
     return book
+}
+
+function _createReview(review) {
+    return {
+        id: utilService.makeId(),
+        ...review,
+    }
 }

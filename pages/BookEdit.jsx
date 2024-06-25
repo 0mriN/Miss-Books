@@ -1,5 +1,5 @@
 const { useNavigate, useParams } = ReactRouterDOM
-const { useState, useEffect } = React
+const { useState, useEffect,useRef } = React
 import { bookService } from "../services/book.service.js"
 import { showSuccessMsg } from "../services/event-bus.service.js"
 
@@ -67,7 +67,6 @@ export function BookEdit() {
     }
 
     const { title, listPrice, thumbnail } = bookToEdit
-    // const { amount } = listPrice
 
     return (
         <section className="book-edit">

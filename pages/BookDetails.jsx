@@ -2,7 +2,9 @@ const { useParams, Link } = ReactRouterDOM
 
 import { AddReview } from "../cmps/AddReview.jsx"
 import { LongTxt } from "../cmps/LongTxt.jsx"
+import { ReviewList } from "../cmps/ReviewList.jsx"
 import { bookService } from "../services/book.service.js"
+import { showErrorMsg } from "../services/event-bus.service.js"
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faHandPointRight } from '@fortawesome/free-solid-svg-icons'
 // import { utilService } from "../services/util.service.js"
@@ -15,9 +17,15 @@ export function BookDetails() {
     const [nextBookId, setNextBookId] = useState()
     const [prevBookId, setPrevBookId] = useState()
 
+    const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingReview, setIsLoadingReview] = useState(false)
+    const [isShowReviewModal, setIsShowReviewModal] = useState(false)
+
     const { bookId } = useParams()
 
     useEffect(() => {
+        setIsLoading(true)
+
         bookService.get(bookId)
             .then(book => {
                 setBook(book)
@@ -25,10 +33,16 @@ export function BookDetails() {
                 bookService.getNextBookId(bookId)
                     .then(nextId => setNextBookId(nextId))
 
-                    bookService.getPrevBookId(bookId)
+                bookService.getPrevBookId(bookId)
                     .then(prevId => setPrevBookId(prevId))
             })
-
+            .catch(err => {
+                console.error('Error fetching book details:', err)
+                showErrorMsg('Failed to load book details')
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
 
     }, [bookId])
 
@@ -37,8 +51,36 @@ export function BookDetails() {
             (book.listPrice.amount < 20) ? 'green' : ''
     )
 
+    function onToggleReview() {
+        setIsShowReviewModal((prevIsShowReview) => !prevIsShowReview)
+    }
 
-    if (!book) return <div>Loading...</div>
+    function onSaveReview(reviewToAdd) {
+        setIsLoadingReview(true)
+        bookService.saveReview(book.id, reviewToAdd)
+            .then((review => {
+                setBook(prevBook => {
+                    const reviews = [review, ...prevBook.reviews]
+                    return { ...prevBook, reviews }
+                })
+            }))
+            .catch((err) => showErrorMsg('Save the review failed', console.log('err:', err)))
+            .finally(() => setIsLoadingReview(false))
+    }
+
+    function onRemoveReview(reviewId) {
+        setIsLoadingReview(true)
+        bookService.removeReview(book.id, reviewId)
+            .then(() => {
+                const filteredReviews = book.reviews.filter(review => review.id !== reviewId)
+                setBook({ ...book, reviews: filteredReviews })
+            })
+            .finally(() => setIsLoadingReview(false))
+    }
+
+    if (
+        // !isLoading || 
+        !book) return <div className="loader">Loading...</div>
 
     return (
         <section className="book-details">
@@ -58,11 +100,22 @@ export function BookDetails() {
             <LongTxt txt={book.description} />
             <button><Link to="/books">Return</Link></button>
             {/* <FontAwesomeIcon icon={faHandPointRight} /> */}
+
             <div>
-            <button><Link to={`/books/${prevBookId}`}>Previous</Link></button>
-            <button><Link to={`/books/${nextBookId}`}>Next</Link></button>
-            {/* <AddReview/> */}
+                <button><Link to={`/books/${prevBookId}`}>Previous</Link></button>
+                <button><Link to={`/books/${nextBookId}`}>Next</Link></button>
             </div>
+            <button onClick={onToggleReview}>Add Review</button>
+            {isShowReviewModal && (<AddReview
+                toggleReview={onToggleReview}
+                saveReview={onSaveReview}
+            />
+            )}
+
+            {/* <div className="review-container">
+                    <ReviewList reviews={book.reviews} onRemoveReview={onRemoveReview} />
+                     
+            </div> */}
         </section>
     )
 }

@@ -1,0 +1,78 @@
+.review-add {
+    /* position: fixed; */
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #474e5d7a;
+    padding-top: 50px;
+}
+
+.review-add .review-modal {
+    position: relative;
+    /* background-color: #fefefe; */
+    margin: 5% auto 15% auto;
+    width: 30%;
+    text-align: center;
+    min-width: 400px;
+    padding: 20px;
+}
+
+.review-modal h1 {
+    background-image: linear-gradient(-86deg, #33bd6d 0%, #0b97b9 100%);
+    color: white;
+    padding: 10px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.review-modal textarea {
+    display: block;
+    margin: 20px auto;
+    resize: none;
+}
+
+.review-form input {
+    display: block;
+    width:20rem;
+    text-align: center;
+}
+
+.rate-by-choice {
+    display: flex;
+    width: 100px;
+    align-content: center;
+}
+
+.star-rating span {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: default;
+    padding: 0;
+}
+
+.star-rating.edit span {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.star-rating button:hover {
+    background-color: inherit;
+}
+
+.star-rating .star {
+    font-size: 1rem;
+}
+
+.star-rating .on {
+    color: gold;
+}
+
+.star-rating .off {
+    color: #101010;
+}
+
+.star-rating.edit .off {
+    color: #ccc;
+}
