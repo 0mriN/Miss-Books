@@ -1,6 +1,6 @@
 const { useParams, Link } = ReactRouterDOM
 
-// import { AddReview } from "../cmps/AddReview.jsx"
+import { AddReview } from "../cmps/AddReview.jsx"
 import { LongTxt } from "../cmps/LongTxt.jsx"
 import { bookService } from "../services/book.service.js"
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

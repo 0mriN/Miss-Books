@@ -1,5 +1,5 @@
-import { BookDetails } from "../pages/BookDetails.jsx";
-// import { bookService } from "../services/book.service.js";
+
+import { bookService } from "../services/book.service.js";
 
 export function AddReview() {
 

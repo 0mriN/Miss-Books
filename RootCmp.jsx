@@ -33,7 +33,6 @@ export function App() {
                         <Route path="/books/:bookId" element={<BookDetails />} />
                         <Route path="/books/edit" element={<BookEdit />} />
                         <Route path="/books/edit/:bookId" element={<BookEdit />} />
-                        {/* the url is getting the edit to the id when trying to edit */}
                     </Routes>
                 </main>
             </section>
