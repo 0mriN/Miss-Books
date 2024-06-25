@@ -1,5 +1,6 @@
 const { useParams, Link } = ReactRouterDOM
 
+// import { AddReview } from "../cmps/AddReview.jsx"
 import { LongTxt } from "../cmps/LongTxt.jsx"
 import { bookService } from "../services/book.service.js"
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -60,6 +61,7 @@ export function BookDetails() {
             <div>
             <button><Link to={`/books/${prevBookId}`}>Previous</Link></button>
             <button><Link to={`/books/${nextBookId}`}>Next</Link></button>
+            {/* <AddReview/> */}
             </div>
         </section>
     )

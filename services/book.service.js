@@ -14,7 +14,8 @@ export const bookService = {
     getNextBookId,
     getPrevBookId,
     getFilterBy,
-    setFilterBy
+    setFilterBy,
+    addReview
 }
 
 function query(gFilterBy = {}) {
@@ -104,6 +105,11 @@ function getPrevBookId(bookId) {
         })
 }
 
+function addReview(bookId,review){
+    console.log('bookId:', bookId);
+    console.log('review:', review);
+}
+
 function _createBooks() {
     let books = utilService.loadFromStorage(BOOK_KEY)
     const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
@@ -135,18 +141,6 @@ function _createBooks() {
         utilService.saveToStorage(BOOK_KEY, books)
     }
 }
-
-// function _createBooks() {
-//     let books = utilService.loadFromStorage(BOOK_KEY)
-//     if (!books || !books.length) {
-//         books = []
-//         books.push(_createBook('The Hunger Games', 300))
-//         books.push(_createBook('Harry Potter', 120))
-//         books.push(_createBook('The Four Agreements', 100))
-//         books.push(_createBook('The Subtle Art Of Not Giving a Beep', 150))
-//         utilService.saveToStorage(BOOK_KEY, books)
-//     }
-// }
 
 function _createBook(title, price = 150) {
     const book = getEmptyBook(title, price)
