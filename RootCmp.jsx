@@ -9,6 +9,7 @@ import { AboutUs } from './pages/AboutUs.jsx'
 import { BookDetails } from './pages/BookDetails.jsx'
 import { BookEdit } from './pages/BookEdit.jsx'
 import { BookIndex } from './pages/BookIndex.jsx'
+import { UserMsg } from './pages/UserMsg.jsx'
 
 const { useState } = React
 
@@ -36,6 +37,7 @@ export function App() {
                     </Routes>
                 </main>
             </section>
+            <UserMsg/>
         </Router>
     )
 }
